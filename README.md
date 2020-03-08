@@ -7,6 +7,7 @@
 ## 第一章 Openresty简介
 
 以下是Openresty的官方简介：
+
 OpenResty® 是一个基于 Nginx 与 Lua 的高性能 Web 平台，其内部集成了大量精良的 Lua 库、第三方模块以及大多数的依赖项。用于方便地搭建能够处理超高并发、扩展性极高的动态 Web 应用、Web 服务和动态网关。
 
 OpenResty® 通过汇聚各种设计精良的 Nginx 模块（主要由 OpenResty 团队自主开发），从而将 Nginx 有效地变成一个强大的通用 Web 应用平台。这样，Web 开发人员和系统工程师可以使用 Lua 脚本语言调动 Nginx 支持的各种 C 以及 Lua 模块，快速构造出足以胜任 10K 乃至 1000K 以上单机并发连接的高性能 Web 应用系统。
@@ -18,8 +19,11 @@ OpenResty® 的目标是让你的Web服务直接跑在 Nginx 服务内部，充�
 ## 第二章 Openresty的第一个程序
 
 学习语言与框架，第一个程序都是那一个经典程序"Hello World!"，我们也从这一经典程序开始，让我们逐步进入Openresty的世界。
+
 为了方便清晰起见，我将Openresty安装在/opt/openresty目录下。什么？不会安装Openresty。请参考如下命令，找不到的包请教下度娘吧。
+
 去https://github.com/openresty/lua-nginx-module下载代码，我们使用的是1.15.8.1版本，使用如下命令安装：
+
 ```shell
 tar xvfz openresty-1.15.8.1.tar.gz
 cd openresty-1.15.8.1
@@ -27,7 +31,9 @@ cd openresty-1.15.8.1
 make
 make install
 ```
+
 安装好了之后，在/opt/openresty下创建services目录，我们自己的程序将都在这个目录下。
+
 具体的目录结构如下：
 ```shell
 /opt/openresty/services/
@@ -36,63 +42,20 @@ make install
 /opt/openresty/services/src/lua/
 /opt/openresty/services/src/libs/
 ```
+
 其中:
+
 /opt/openresty/services/conf/目录下放我们的ngxin的conf文件。
+
 /opt/openresty/services/src/lua/目录下放我们自己的lua代码。
+
 /opt/openresty/services/src/libs/目录下放我们自己开发的lua的C库。
+
 其实大家自己的代码可以按照自己的方式放代码，但是为了整洁，我是这样放代码的，同时也是为了说明的方便。
 
-做好了准备工作，我们已经安装了Openresty了，代码的目录结构也已经创建好了，那么就开始写我们的一个程序吧。
+Openresty已经安装完成，代码的目录结构也已经创建好了，基本的准备工作已经完成了，那么就开始写我们的一个程序吧。
+
 见证奇迹的时候到来了。
-
-
-
-
-
-## Install
-
-To install, you could just use `luarocks`:
-
-```shell
-luarocks install lua-protobuf
-```
-
-If you want to build it from source, just clone the repo and use luarocks:
-
-```shell
-git clone https://github.com/starwing/lua-protobuf
-luarocks make rockspecs/lua-protobuf-scm-1.rockspec
-```
-
-If you don't have luarocks, use `hererocks` to install Lua and luarocks:
-
-```shell
-pip install hererocks
-git clone https://github.com/starwing/lua-protobuf
-hererocks -j 2.0 -rlatest .
-bin/luarocks make lua-protobuf/rockspecs/lua-protobuf-scm-1.rockspec CFLAGS="-fPIC -Wall -Wextra" LIBFLAGS="-shared"
-cp protoc.lua pb.so ..
-```
-
-Or you can build it by hand, it only has a pure Lua module `protoc.lua` and a pair of C file: `pb.h` and `pb.c`.
-
-To build it on macOS, use your favor compiler:
-
-```shell
-gcc -O2 -shared -undefined dynamic_lookup pb.c -o pb.so
-```
-
-On Linux, use the nearly same command:
-
-```shell
-gcc -O2 -shared -fPIC pb.c -o pb.so
-```
-
-On Windows, you could use MinGW or MSVC, create a `*.sln` project or build it on the command line (notice the `Lua_BUILD_AS_DLL` flag):
-
-```shell
-cl /O2 /LD /Fepb.dll /I Lua53\include /DLUA_BUILD_AS_DLL pb.c Lua53\lib\lua53.lib
-```
 
 ## Example
 
