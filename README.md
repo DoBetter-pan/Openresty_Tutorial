@@ -305,3 +305,6 @@ Hello World!
 ```
 好了，第一个Openresty的服务已经搭建成功，希望大家也学会了。下一章将给大家讲解第一个实用服务，cookiemapping服务的搭建。
 
+## 第三章 Openresty的第一个实用程序: cookiemapping服务的搭建
+
+上一章已经给大家普及了一下Openresty的一些基础的知识以及写了一个最著名的程序“hello world！”。这章逐步深入的去介绍更深奥一些的知识，为了便于说明就从我当年最开始写的服务cookiemapping服务说起。
