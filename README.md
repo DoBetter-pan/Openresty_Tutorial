@@ -2,7 +2,7 @@
 
 ## 前言
 
-本人使用Openresty做为后段的开发框架已经有五年多了，通过一段时间的使用对Openresty的使用有了一定的了解，希望将本人知道的一些知识整理出来，做一个小的教程，希望能够帮助到一些初学者。本文章是基于使用Openresty做为后段服务的基础教程，希望大家通过本人的教程能够快速掌握Openresty这一优秀的框架，既然无太多编程经验的人也可以写出简单高效的服务。本人的水平有限，如果有不对之处，也希望大家批评指正。
+本人使用Openresty做为后段的开发框架已经有五年多了，通过一段时间的使用对Openresty的使用有了一定的了解，希望将本人知道的一些知识整理出来，做一个小的教程，希望能够帮助到一些初学者。本文章是基于使用Openresty做为后段服务的基础教程，希望大家通过本人的教程能够快速掌握Openresty这一优秀的框架，即使无太多编程经验的人也可以写出简单高效的服务。本人的水平有限，如果有不对之处，也希望大家批评指正。
 
 ## 第一章 Openresty简介
 
@@ -14,7 +14,7 @@ OpenResty® 通过汇聚各种设计精良的 Nginx 模块（主要由 OpenResty
 
 OpenResty® 的目标是让你的Web服务直接跑在 Nginx 服务内部，充分利用 Nginx 的非阻塞 I/O 模型，不仅仅对 HTTP 客户端请求,甚至于对远程后端诸如 MySQL、PostgreSQL、Memcached 以及 Redis 等都进行一致的高性能响应。
 
-对于我来说：Openresty就是一个性能高效、编程简单的优秀后段框架。
+用一句话总结：Openresty就是一个性能高效、编程简单的优秀后段框架。
 
 ## 第二章 Openresty的第一个程序
 
@@ -51,7 +51,7 @@ make install
 
 /opt/openresty/services/src/libs/目录下放我们自己开发的lua的C库。
 
-其实大家自己的代码可以按照自己的方式放代码，但是为了整洁，我是这样放代码的，同时也是为了说明的方便。
+其实大家自己的代码可以按照自己的目录方式放代码，但是为了整洁，我是这样放代码的，同时也是为了说明的方便。
 
 Openresty已经安装完成，代码的目录结构也已经创建好了，基本的准备工作已经完成了，那么就开始写我们的一个程序吧。
 
@@ -151,7 +151,6 @@ http {
     default_type  application/octet-stream;
 
     log_format main '"$time_local","$remote_addr","$request_method","$request_uri","$status","$request_time","$body_bytes_sent","$appdata"';
-    log_format monitor escape=none '$appdata';
 
     client_header_timeout 10s;
     client_header_buffer_size 8k;
@@ -281,3 +280,28 @@ coroutine 0:
         [C]: in function 'require'
         content_by_lua(openresty.conf:64):2: in main chunk, client: 127.0.0.1, server: openresty.pange.xin, request: "GET /hello HTTP/1.1", host: "127.0.0.1"
 ```
+这是因为我们还没有写代码呢，使用如下命令创建文件：
+```shell
+touch src/lua/hello/hello.lua
+```
+在文件中加入如下代码：
+```lua
+local function serve()
+    ngx.say("Hello World!")
+end
+
+local _M = {
+    serve = serve
+}
+
+return _M
+```
+好了，第一个程序就完成，执行 ./bin/install.sh 将该程序拷贝到指定目录。
+然后启动或重启一下服务，./bin/openresty.sh start | ./bin/openresty.sh reload
+服务已经搭建好了，是不是很简单。测试一下：
+```shell
+curl  "http://127.0.0.1/hello" 
+Hello World!
+```
+好了，第一个Openresty的服务已经搭建成功，希望大家也学会了。下一章将给大家讲解第一个实用服务，cookiemapping服务的搭建。
+
